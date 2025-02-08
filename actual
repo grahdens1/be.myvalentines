@@ -1,0 +1,90 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heart } from "lucide-react";
+
+export default function ValentineInvite() {
+  const [accepted, setAccepted] = useState(false);
+  const [response, setResponse] = useState("");
+  const [followUp, setFollowUp] = useState("");
+  const [nextStep, setNextStep] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-pink-300 to-red-400 p-6">
+      <Card className="bg-white p-12 text-center shadow-2xl rounded-3xl max-w-lg border-4 border-red-500">
+        <CardContent>
+          {!accepted ? (
+            <>
+              <motion.h1 
+                className="text-5xl font-extrabold text-pink-700 drop-shadow-lg"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                Will you be my Valentine? 💖
+              </motion.h1>
+              <div className="mt-8 space-y-6 flex flex-col items-center">
+                <Button 
+                  className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-8 py-6 w-full max-w-sm rounded-full text-xl font-semibold shadow-lg transform transition duration-300 hover:scale-105 text-center leading-relaxed" 
+                  onClick={() => { setAccepted(true); setResponse("Yay! 🎁❤️ See you on the 14th!"); }}
+                >
+                  Yes!
+                </Button>
+                <Button 
+                  className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-8 py-6 w-full max-w-sm rounded-full text-xl font-semibold shadow-lg transform transition duration-300 hover:scale-105 text-center leading-relaxed" 
+                  onClick={() => { setAccepted(true); setResponse("Yes, but only if you promise to make me feel like the luckiest person alive! 😘🌹"); }}
+                >
+                  Yes!
+                </Button>
+              </div>
+            </>
+          ) : !nextStep ? (
+            <div className="space-y-6 mt-6">
+              <h1 className="text-4xl font-bold text-green-500 drop-shadow-lg">{response}</h1>
+              <Button 
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-8 py-6 w-full max-w-sm rounded-full text-xl font-semibold shadow-lg transform transition duration-300 hover:scale-105 text-center" 
+                onClick={() => setNextStep(true)}
+              >
+                Let's Talk More 💬
+              </Button>
+            </div>
+          ) : (
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              <motion.div 
+                animate={{ rotate: [0, 10, -10, 10, -10, 0] }} 
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="mt-4"
+              >
+                <Heart className="text-red-500 w-20 h-20 drop-shadow-lg" />
+              </motion.div>
+              {!followUp ? (
+                <div className="mt-6 space-y-6 flex flex-col items-center">
+                  <Button 
+                    className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-6 w-full max-w-sm rounded-full text-xl font-semibold shadow-lg transform transition duration-300 hover:scale-105 text-center leading-relaxed" 
+                    onClick={() => setFollowUp("Tell me, what's one thing I can do to make our date unforgettable? 😉")}
+                  >
+                    Let's Turn Up the Heat! 🔥
+                  </Button>
+                  <Button 
+                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-6 w-full max-w-sm rounded-full text-xl font-semibold shadow-lg transform transition duration-300 hover:scale-105 text-center leading-relaxed" 
+                    onClick={() => setFollowUp("What's one thing you've been wanting me to do just for you? 😏")}
+                  >
+                    Your Secret Desire 💕
+                  </Button>
+                </div>
+              ) : (
+                <h2 className="text-3xl font-semibold text-pink-700 mt-4 drop-shadow-lg">{followUp}</h2>
+              )}
+            </motion.div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
